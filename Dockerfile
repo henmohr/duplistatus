@@ -57,7 +57,11 @@ RUN mkdir -p /app/data && pnpm run build
 # ------------------------------------------------------------
 FROM base AS runner
 
-RUN apk add --no-cache curl tzdata icu-libs icu-data-full tini sqlite
+# Fix for multi-arch builds: Install packages in separate layers to avoid busybox trigger issues
+RUN apk update && apk upgrade
+RUN apk add --no-cache curl
+RUN apk add --no-cache tzdata icu-libs icu-data-full
+RUN apk add --no-cache tini sqlite
 
 ENV NODE_ENV=production
 ENV NEXT_TELEMETRY_DISABLED=1
