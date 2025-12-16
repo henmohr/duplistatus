@@ -208,15 +208,40 @@ export function ApiKeysTestClient() {
                   {copied ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
                 </Button>
               </div>
-              <p className="text-xs text-green-600">
-                Use this in Duplicati: <code className="bg-white px-1 py-0.5 rounded">
-                  --send-http-url={hostUrl}/api/upload?api_key={generatedKey.apiKey}
-                </code>
-              </p>
+              <div className="mt-3">
+                <p className="text-xs font-semibold text-green-700 mb-2">Duplicati Configuration:</p>
+                <div className="bg-white border border-green-300 rounded p-3 font-mono text-xs break-all relative">
+                  <Button
+                    size="sm"
+                    variant="ghost"
+                    onClick={() => copyToClipboard(
+                      `--send-http-url=${hostUrl}/api/upload?api_key=${generatedKey.apiKey}\n` +
+                      `--send-http-result-output-format=Json\n` +
+                      `--send-http-log-level=Information\n` +
+                      `--send-http-max-log-lines=0`
+                    )}
+                    className="absolute top-2 right-2"
+                  >
+                    {copied ? <Check className="h-3 w-3" /> : <Copy className="h-3 w-3" />}
+                  </Button>
+                  <pre className="pr-10">
+                    <code className="text-green-800">
+                      --send-http-url={hostUrl}/api/upload?api_key={generatedKey.apiKey}{"\n"}
+                      --send-http-result-output-format=Json{"\n"}
+                      --send-http-log-level=Information{"\n"}
+                      --send-http-max-log-lines=0
+                    </code>
+                  </pre>
+                </div>
+                <p className="text-xs text-gray-600 mt-2">
+                  Copy all lines above and add to your Duplicati backup job advanced options.
+                </p>
+              </div>
               <Button 
                 size="sm" 
                 variant="outline"
                 onClick={() => setGeneratedKey(null)}
+                className="mt-3"
               >
                 Close
               </Button>

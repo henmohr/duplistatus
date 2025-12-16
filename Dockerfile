@@ -70,7 +70,7 @@ ENV NEXT_TELEMETRY_DISABLED=1
 ENV VERSION=1.0.1 \
     PORT=9666 \
     CRON_PORT=9667 \
-    TZ=Europe/London \
+    TZ=America/Sao_Paulo \
     LANG=en_GB 
 
 WORKDIR /app
