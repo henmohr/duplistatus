@@ -12,6 +12,19 @@ import { AuditLogger } from '@/lib/audit-logger';
 import { getClientIpAddress } from '@/lib/ip-utils';
 import bcrypt from 'bcrypt';
 
+// Handle GET requests (Duplicati connectivity test)
+export async function GET(request: NextRequest) {
+  return NextResponse.json(
+    { 
+      status: 'ok',
+      message: 'duplistatus upload endpoint is ready',
+      methods: ['POST'],
+      version: process.env.VERSION || '1.0.0'
+    },
+    { status: 200 }
+  );
+}
+
 export async function POST(request: NextRequest) {
   try {
     // Get client info early for audit logging
