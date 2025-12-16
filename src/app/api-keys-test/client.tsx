@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -32,6 +32,7 @@ export function ApiKeysTestClient() {
   const [newKeyDescription, setNewKeyDescription] = useState('');
   const [generatedKey, setGeneratedKey] = useState<NewApiKeyResponse | null>(null);
   const [copied, setCopied] = useState(false);
+  const [hostUrl, setHostUrl] = useState<string>('');
 
   // Fetch all API keys
   const fetchKeys = async () => {
@@ -100,6 +101,13 @@ export function ApiKeysTestClient() {
       setLoading(false);
     }
   };
+
+  // Get current host URL on mount
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      setHostUrl(window.location.origin);
+    }
+  }, []);
 
   // Copy to clipboard
   const copyToClipboard = (text: string) => {
@@ -202,7 +210,7 @@ export function ApiKeysTestClient() {
               </div>
               <p className="text-xs text-green-600">
                 Use this in Duplicati: <code className="bg-white px-1 py-0.5 rounded">
-                  --send-http-url=http://HOST:9666/api/upload?api_key={generatedKey.apiKey}
+                  --send-http-url={hostUrl}/api/upload?api_key={generatedKey.apiKey}
                 </code>
               </p>
               <Button 
