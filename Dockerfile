@@ -1,4 +1,5 @@
 # duplistatus Dockerfile with integrated Docusaurus documentation
+# Cache bust: 2025-12-16-v2
 
 FROM node:alpine AS base
 
